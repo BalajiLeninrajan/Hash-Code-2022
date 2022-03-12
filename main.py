@@ -25,6 +25,8 @@ def main():
    file_index = TerminalMenu(input_files).show()
    contributors, projects = read(input_files[file_index])
 
+   init_time = time()
+
    # Execute everyday
    for day in range(max_days):
       # Do work and check completion
@@ -48,6 +50,7 @@ def main():
                working.append(possible_project)
 
    write(input_files[file_index], work_done)
+   return init_time
 
 def sort_projects(projects : list[Project], day : int):
    """
@@ -92,6 +95,5 @@ def assign(project : Project, contributors : list[Contributor]):
 
 if __name__=="__main__":
    # Runs program and calculates time elapsed
-   init_time = time()
-   main()
+   init_time = main()
    print("--- Time taken: {} seconds ---".format(time() - init_time))

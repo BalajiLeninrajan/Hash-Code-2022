@@ -25,6 +25,7 @@ def main():
    file_index = TerminalMenu(input_files).show()
    contributors, projects = read(input_files[file_index])
 
+   # Starts timer
    init_time = time()
 
    # Execute everyday
@@ -49,7 +50,11 @@ def main():
             if possible_project:
                working.append(possible_project)
 
+   # Writes output to ./output/filename
+   # NOTE: does not create output folder if doesn't alredt exist
    write(input_files[file_index], work_done)
+
+   # Returns start time to calculate time elapsed
    return init_time
 
 def sort_projects(projects : list[Project], day : int):
@@ -71,8 +76,12 @@ def assign(project : Project, contributors : list[Contributor]):
    If all the skills are able to be fulfilled the task is returned
    Else returns false
    """
+   # Creates temporary tasks
    possible_project : Work = Work(project, [], [])
+   #Populates skills in task
    for project_skill in project.skills:
+      # Interates trough contributors and appends when conditions are met
+      # TODO: Sort contributors on highest skill total or similar metric
       for contributor in contributors:
          if (
                contributor not in possible_project.contributors
@@ -85,6 +94,8 @@ def assign(project : Project, contributors : list[Contributor]):
                ):
                   possible_project.contributors.append(contributor)
                   possible_project.contributors_skills.append(contributor_skill)
+
+                  # Checks if all skills are satified and level ups contributor skills
                   if len(project.skills) == len(possible_project.contributors_skills):
                      project.in_progress = True
                      for i in range(len(possible_project.contributors)):

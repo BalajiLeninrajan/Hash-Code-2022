@@ -9,8 +9,10 @@ def read(filename : str):
     projects : list[Project] = []
 
     f = open("./input/" + filename + ".in.txt", "r")
+
     # Number of contributors and projects
     C, P = [int(x) for x in f.readline().split(" ")]
+
     # Gets contributor skills
     for i in range(C):
         name, N = f.readline().split(" ")
@@ -26,6 +28,7 @@ def read(filename : str):
             skills,
             False
         ))
+        
     # Gets project skills
     for i in range(P):
         name, D, S, B, R = f.readline().split(" ")

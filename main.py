@@ -28,6 +28,9 @@ def main():
    # Starts timer
    init_time = time()
 
+   # Sort projects based on score
+   sort_projects(projects)
+
    # Execute everyday
    for day in range(max_days):
       # Do work and check completion
@@ -39,9 +42,6 @@ def main():
                contributor.is_working = False
             projects.remove(work.project)
             working.remove(work)
-
-      # Sort projects based on score
-      sort_projects(projects, day)
 
       # Assigns contributors to each project
       for project in projects:
@@ -57,17 +57,14 @@ def main():
    # Returns start time to calculate time elapsed
    return init_time
 
-def sort_projects(projects : list[Project], day : int):
+def sort_projects(projects : list[Project]):
    """
    Sorts projects and updates scores
    """
    for i in range(len(projects)):
-      # Decrements score if past best before
-      projects[i].penalize(day)
-
       # Simple bubble sort
       for j in range(len(projects) - i - 1):
-         if projects[j].score < projects[j + 1].score:
+         if projects[j].score - projects[i].best_before < projects[j + 1].score - projects[j + 1].best_before:
             projects[j], projects[j + 1] = projects[j + 1], projects[j]
 
 def assign(project : Project, contributors : list[Contributor]):

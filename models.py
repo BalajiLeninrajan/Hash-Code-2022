@@ -20,14 +20,6 @@ class Project:
         if self.days > 0:
             self.days -= 1
 
-    def penalize(self, day):
-        """
-        Adjust score to reflect deductions from missing deadline
-        """
-        if day >= self.best_before:
-            self.score -= 1
-        
-
 class Skill:
     def __init__(self, name, level) -> None:
         self.name : str = name
